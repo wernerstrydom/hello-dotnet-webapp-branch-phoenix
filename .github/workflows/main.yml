@@ -1,9 +1,18 @@
-name: Build
+# Licensed to Werner Strydom under one or more agreements.
+# Werner Strydom licenses this file to you under the MIT license.
+#
+# This builds `main``. It is slightly different than the branch build in
+# that it uses a differnet resource group. While we could refactor 
+# the workflows to optimize for reuse, this one is optimized for 
+# understanding, and any indirection is only going to complicate that.
+
+name: Build Main
 on:
   push:
     branches:
       - main
 env:
+  RG_NAME: 'Hello-Phoenix-Branch'
   APP_NAME: 'Hello'
   SRC_PATH: 'src' 
   OUTPUT_PATH: 'dist' 
@@ -28,3 +37,31 @@ jobs:
       - name: Publish
         run: dotnet publish ${{ env.SRC_PATH }}/Hello.sln --no-restore --no-build --configuration Release --output ${{ env.OUTPUT_PATH }}
       
+      - name: Create Resource Group
+        run: |
+          if [ $(az group exists --name "${{ env.RG_NAME }}") = false ]; then
+            az group create --name "${{ env.RG_NAME }}" --location "West US"
+          fi 
+
+      - name: Provision
+        id: deploy
+        uses: azure/arm-deploy@v1
+        with:
+          template: ${{ env.DEPLOY_PATH }}/azuredeploy.json
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: "${{ env.RG_NAME }}"
+          deploymentName: ${{ env.APP_NAME }}-1.0.${{github.run_number}}
+          parameters: name=${{ env.APP_NAME }}
+      
+      - name: Deploy 
+        uses: azure/webapps-deploy@v2
+        id: fa
+        with:
+          app-name: ${{steps.deploy.outputs.siteName}}
+          slot-name: 'Production'
+          package: '${{ env.OUTPUT_PATH }}'
+    
+      - name: Test 
+        run: dotnet test ${{ env.SRC_PATH }}/Hello.sln --configuration Release --no-build --no-restore 
+        env:
+          WEBAPP_URL: "https://${{steps.deploy.outputs.url}}"

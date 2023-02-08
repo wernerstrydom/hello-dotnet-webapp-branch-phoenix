@@ -1,3 +1,6 @@
+// Licensed to Werner Strydom under one or more agreements.
+// Werner Strydom licenses this file to you under the MIT license.
+
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,10 +11,6 @@ namespace Hello.Pages;
 [IgnoreAntiforgeryToken]
 public class ErrorModel : PageModel
 {
-    public string? RequestId { get; set; }
-
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
     private readonly ILogger<ErrorModel> _logger;
 
     public ErrorModel(ILogger<ErrorModel> logger)
@@ -19,9 +18,12 @@ public class ErrorModel : PageModel
         _logger = logger;
     }
 
+    public string? RequestId { get; set; }
+
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
     public void OnGet()
     {
         RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
     }
 }
-

@@ -1,9 +1,17 @@
+# Licensed to Werner Strydom under one or more agreements.
+# Werner Strydom licenses this file to you under the MIT license.
+#
+# This deleted Azure resources that were created. It's important that 
+# RG_NAME must match that found in branch-build.yml. Remember that this
+# runs within the context of the default branch, while branch-build is 
+# running within the context of the branch.
+
 name: Delete Environment
 on:
   delete
 
 env:
-  APP_NAME: 'Hello-Phoenix-Branch-${{ github.event.ref }}'
+  RG_NAME: 'Hello-Phoenix-Branch-${{ github.event.ref }}'
 
 jobs:
   delete:
@@ -16,6 +24,6 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Delete Resource Group
         run: |
-          if [ $(az group exists --name "${{ env.APP_NAME }}") = true ]; then
-            az group delete --name "${{ env.APP_NAME }}" --yes 
+          if [ $(az group exists --name "${{ env.RG_NAME }}") = true ]; then
+            az group delete --name "${{ env.RG_NAME }}" --yes 
           fi 

@@ -1,4 +1,12 @@
-name: Build
+# Licensed to Werner Strydom under one or more agreements.
+# Werner Strydom licenses this file to you under the MIT license.
+#
+# This builds a branch. It is slightly different than main build in
+# that it uses a differnet resource group. While we could refactor 
+# the workflows to optimize for reuse, this one is optimized for 
+# understanding, and any indirection is only going to complicate that.
+
+name: Build Branch
 on:
   push:
     branches-ignore:
