@@ -17,5 +17,5 @@ jobs:
       - name: Delete Resource Group
         run: |
           if [ $(az group exists --name "${{ env.APP_NAME }}") = true ]; then
-            az group delete --name "${{ env.APP_NAME }}" --yes --no-wait
+            az group delete --name "${{ env.APP_NAME }}" --yes 
           fi 
