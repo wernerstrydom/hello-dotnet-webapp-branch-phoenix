@@ -15,6 +15,7 @@ env:
   RG_NAME: 'Hello-Phoenix-Branch'
   APP_NAME: 'Hello'
   SRC_PATH: 'src' 
+  DEPLOY_PATH: 'deploy'
   OUTPUT_PATH: 'dist' 
   DOTNET_VERSION: '7.0.x' 
 jobs:
@@ -41,7 +42,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
+
       - name: Create Resource Group
         run: |
           if [ $(az group exists --name "${{ env.RG_NAME }}") = false ]; then
