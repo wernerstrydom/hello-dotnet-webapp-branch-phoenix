@@ -8,6 +8,7 @@ env:
   RG_NAME: 'Hello-Phoenix-Branch-${{ github.ref_name }}'
   APP_NAME: 'Hello'
   SRC_PATH: 'src' 
+  DEPLOY_PATH: 'deploy' 
   OUTPUT_PATH: 'dist' 
   DOTNET_VERSION: '7.0.x' 
 jobs:
