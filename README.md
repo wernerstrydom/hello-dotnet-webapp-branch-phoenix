@@ -1,3 +1,5 @@
-# Hello
+# Hello Phoenix
 
-This repository contains a overly simple web application, written in .NET, that displays "Hello World". It serves as a template for testing various approaches to the software release process, as it pertains to .NET.
+This is an experiment whereby a new environment is created in Azure whenever
+a branch is pushed to GitHub. The environment is then destroyed when the branch
+is deleted.
