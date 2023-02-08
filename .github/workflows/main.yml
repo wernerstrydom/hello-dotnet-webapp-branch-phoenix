@@ -37,6 +37,11 @@ jobs:
       - name: Publish
         run: dotnet publish ${{ env.SRC_PATH }}/Hello.sln --no-restore --no-build --configuration Release --output ${{ env.OUTPUT_PATH }}
       
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - name: Create Resource Group
         run: |
           if [ $(az group exists --name "${{ env.RG_NAME }}") = false ]; then
