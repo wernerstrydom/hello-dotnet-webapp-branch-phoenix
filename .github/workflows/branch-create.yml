@@ -3,7 +3,7 @@ on:
   create
 
 env:
-  APP_NAME: 'Hello-Phoenix-Branch-${{ github.event.ref_name }}'
+  APP_NAME: 'Hello-Phoenix-Branch-${{ github.event.ref }}'
 
 jobs:
   create:
