@@ -1,4 +1,4 @@
-name: Create Environment for branch '${{ github.ref_name }}'
+name: Create Environment 
 on:
   create
 

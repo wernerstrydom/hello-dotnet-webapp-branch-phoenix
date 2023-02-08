@@ -1,4 +1,4 @@
-name: Delete Environment for branch '${{ github.ref_name }}'
+name: Delete Environment
 on:
   delete
 
