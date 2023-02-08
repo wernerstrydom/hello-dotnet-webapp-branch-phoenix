@@ -3,15 +3,13 @@ on:
   delete
 
 env:
-  APP_NAME: 'Hello3-${{ github.ref_name }}'
+  APP_NAME: 'Hello-Phoenix-Branch-${{ github.event.ref_name }}'
 
 jobs:
   delete:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: "create"
-        run: echo "Delete Environment ${{ github.ref_name }}"
       - name: Azure Login
         uses: azure/login@v1
         with:
